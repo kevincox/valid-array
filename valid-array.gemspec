@@ -13,26 +13,8 @@ Gem::Specification.new do |s|
   s.description = %q{      All methods that alter the contents of an array that implements this Gem are first checked to
       ensure that the added items are of the types allowed. All methods behave exactly as their Array
       counterparts, including additional forms, block processing, etc.
-
-      Defining a ValidArray Class:
-
-      ```ruby
-      class ThingsArray < Array
-        extend ValidArray
-        restrict_types Thing1, Thing2
-      end
-
-      things = ThingsArray.new
-      ```
-
-      Generating a single ValidArray
-
-      ```ruby
-      things = ValidArray(Thing1,Thing2).new
-
-      These classes can be extended, and their accepted-types appended to after their initial definition.
 }
-  s.email = %q{ruby-dev@yaauie.com}
+  s.email = %q{kevincox@kevincox.ca}
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
@@ -47,11 +29,13 @@ Gem::Specification.new do |s|
     "VERSION",
     "lib/valid-array.rb",
     "lib/valid-array/functions.rb",
+    "lib/typed-array.rb",
     "spec/spec_helper.rb",
     "spec/valid-array_spec.rb",
+    "spec/typed-array_spec.rb",
     "valid-array.gemspec"
   ]
-  s.homepage = %q{http://github.com/yaauie/valid-array}
+  s.homepage = %q{http://github.com/kevincox/valid-array}
   s.licenses = [%q{MIT}]
   s.require_paths = [%q{lib}]
   s.rubygems_version = %q{1.8.6}

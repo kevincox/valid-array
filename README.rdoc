@@ -1,26 +1,61 @@
 = valid-array
 
-Gem provides enforced-type functionality to Arrays
+Gem provides enforced-properties to arrays.
 
 Copyright (c) 2011 Ryan Biesemeyer
+Copyright (c) 2013 Kevin Cox
 See LICENSE.txt for details
 
 Ryan Biesemeyer mailto:ruby-dev@yaauie.com
+Ryan Biesemeyer mailto:kevincox@kevincox.ca
 
 == Example
 
-=== Create Standard Class
+=== ValidArray
+
+Valid Array provides a hook to change and validate every element added to the
+array.
 
  require 'valid-array'
- class Things < Array
+ class StringArray < Array
+  extend ValidArray
+  
+  def self.validate(element)
+    element.to_s # Make everything a String.
+  end
+ end
+ 
+ class EvenArray < Array
    extend ValidArray
+  
+   def self.validate(element)
+      if not element.is_a? Numeric
+         raise UnexpectedTypeException([Numeric], element.class)
+      end
+      
+      if element % 2 == 1
+         # Assuming this exception is defined somewhere.
+         raise NotEvenException(element)
+      end
+   end
+ end
+
+=== TypedArray
+
+TypedArray is fully compatible with https://github.com/yaauie/typed-array/.
+
+=== Create Standard Class
+
+ require 'typed-array'
+ class Things < Array
+   extend TypedArray
    restrict_types Thing1,Thing2
  end
  
 === Generate Class using Factory
  
- require 'valid-array'
- things = ValidArray(Thing1,Thing2)
+ require 'typed-array'
+ things = TypedArray(Thing1,Thing2)
 
 === Adding items to the Array
  
@@ -32,11 +67,11 @@ Ryan Biesemeyer mailto:ruby-dev@yaauie.com
  # wrong types, ValidArray::UnexpectedTypeException is raised and the call is
  # aborted before modifying the enforced ValidArray instance.
  
- require 'valid-array'
- symbols = ValidArray(Symbol).new([:foo,:bar,:baz,:bingo])
+ require 'typed-array'
+ symbols = TypedArray(Symbol).new([:foo,:bar,:baz,:bingo])
  begin
-   integers = ValidArray(Integer).new([1,3,7,2,:symbol])
- rescue ValidArray::UnexpectedTypeException
+   integers = TypedArray(Integer).new([1,3,7,2,:symbol])
+ rescue TypedArray::UnexpectedTypeException
    puts "An error occured: #{$!}"
  end
 

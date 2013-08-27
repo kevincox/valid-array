@@ -6,7 +6,7 @@ describe ValidArray do
       class MyArray < Array
         extend ValidArray
         
-        def self.validate(i, e)
+        def self.validate(e)
           e.to_s
         end
       end

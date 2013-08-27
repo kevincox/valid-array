@@ -22,27 +22,9 @@ Jeweler::Tasks.new do |gem|
       All methods that alter the contents of an array that implements this Gem are first checked to
       ensure that the added items are of the types allowed. All methods behave exactly as their Array
       counterparts, including additional forms, block processing, etc.
-
-      Defining a ValidArray Class:
-
-      ```ruby
-      class ThingsArray < Array
-        extend ValidArray
-        restrict_types Thing1, Thing2
-      end
-
-      things = ThingsArray.new
-      ```
-
-      Generating a single ValidArray
-
-      ```ruby
-      things = ValidArray(Thing1,Thing2).new
-
-      These classes can be extended, and their accepted-types appended to after their initial definition.
     DESCRIPTION
-  gem.email = "ruby-dev@yaauie.com"
-  gem.authors = ["Ryan Biesemeyer"]
+  gem.email = "kevincox@kevincox.ca"
+  gem.authors = ["Kevin Cox", "Ryan Biesemeyer"]
   gem.add_development_dependency("rdoc", "~> 3.9")
 end
 Jeweler::RubygemsDotOrgTasks.new

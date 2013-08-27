@@ -17,7 +17,7 @@ module ValidArray
   end
 
   # Default validator.  Override this.
-  def validate(index, element)
+  def validate(element)
     raise NotImplementedError, "You must implement validate."
   end
 

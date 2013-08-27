@@ -34,7 +34,7 @@ module ValidArray
 
     # Validates outcome. See Array#<<
     def <<(item)
-      self.class.validate length, item
+      item = self.class.validate item
       super
     end
 
@@ -50,13 +50,13 @@ module ValidArray
 
     # Validates outcome. See Array#[]=
     def []=(idx, item)
-      self.class.validate idx, item
+      item = self.class.validate item
       super
     end
 
     # Validates outcome. See Array#concat
     def concat(other_ary)
-      _ensure_array_is_valid other_ary, length
+      _ensure_array_is_valid other_ary
       super
     end
 
@@ -76,7 +76,7 @@ module ValidArray
     # Validates outcome. See Array#push
     def push(*items)
       items = items.dup
-      _ensure_array_is_valid items, length
+      _ensure_array_is_valid items
       super
     end
 
@@ -84,7 +84,7 @@ module ValidArray
     def unshift(*items)
       items = items.dup
       _ensure_array_is_valid items
-      super *items
+      super
     end
 
     # Validates outcome. See Array#map!
@@ -95,10 +95,9 @@ module ValidArray
     protected
 
     # Ensure that all items in the passed Array are allowed
-    def _ensure_array_is_valid(ary, offset=0)
-      ary.each_with_index do |e, i|
-       # pp self, self.class.methods
-        ary[i] = self.class.validate(i+offset, e)
+    def _ensure_array_is_valid(ary)
+      ary.map! do |e|
+        self.class.validate(e)
       end
     end
   end

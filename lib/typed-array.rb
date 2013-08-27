@@ -30,7 +30,7 @@ module TypedArray
   UnexpectedTypeException = ValidArray::UnexpectedTypeException
 
   # Default validator.  Override this.
-  def validate(index, item)
+  def validate(item)
     if item.nil? or restricted_types.any? { |allowed| item.class <= allowed }
       return item
     else
