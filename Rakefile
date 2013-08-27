@@ -14,8 +14,8 @@ require 'rake'
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "typed-array"
-  gem.homepage = "http://github.com/yaauie/typed-array"
+  gem.name = "valid-array"
+  gem.homepage = "http://github.com/kevincox/valid-array"
   gem.license = "MIT"
   gem.summary = %Q{Provides methods for creating type-enforced Arrays}
   gem.description =<<-DESCRIPTION
@@ -23,21 +23,21 @@ Jeweler::Tasks.new do |gem|
       ensure that the added items are of the types allowed. All methods behave exactly as their Array
       counterparts, including additional forms, block processing, etc.
 
-      Defining a TypedArray Class:
+      Defining a ValidArray Class:
 
       ```ruby
       class ThingsArray < Array
-        extend TypedArray
+        extend ValidArray
         restrict_types Thing1, Thing2
       end
 
       things = ThingsArray.new
       ```
 
-      Generating a single TypedArray
+      Generating a single ValidArray
 
       ```ruby
-      things = TypedArray(Thing1,Thing2).new
+      things = ValidArray(Thing1,Thing2).new
 
       These classes can be extended, and their accepted-types appended to after their initial definition.
     DESCRIPTION
@@ -65,7 +65,7 @@ Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "typed-array #{version}"
+  rdoc.title = "valid-array #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
