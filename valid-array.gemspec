@@ -49,12 +49,14 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rspec>, ["~> 2.6"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.9"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.9"])
+      s.add_development_dependency(%q<rdoc>, ["~> 3.9"])
     else
       s.add_dependency(%q<valid-array>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.6"])
       s.add_dependency(%q<rdoc>, ["~> 3.9"])
       s.add_dependency(%q<rspec>, ["~> 2.6"])
+      s.add_dependency(%q<rdoc>, ["~> 3.9"])
       s.add_dependency(%q<rdoc>, ["~> 3.9"])
       s.add_dependency(%q<rdoc>, ["~> 3.9"])
     end
@@ -64,6 +66,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<jeweler>, ["~> 1.6"])
     s.add_dependency(%q<rdoc>, ["~> 3.9"])
     s.add_dependency(%q<rspec>, ["~> 2.6"])
+    s.add_dependency(%q<rdoc>, ["~> 3.9"])
     s.add_dependency(%q<rdoc>, ["~> 3.9"])
     s.add_dependency(%q<rdoc>, ["~> 3.9"])
   end
