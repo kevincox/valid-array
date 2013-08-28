@@ -8,9 +8,9 @@ vaild_array also provides compatibility with the typed-array gem.  There is both
 'valid_array/typed_array' which imports to `ValidArray::TypedArray` and a fully
 compatible 'valid-array' which passes 'valid-array's own test suite.
 
-Copyright (c) 2011 Ryan Biesemeyer <mailto:ruby-dev@yaauie.com> (Original typed-array work)
-Copyright (c) 2013 Kevin Cox <mailto:kevincox@kevincox.ca>
-See LICENSE for details.
+- Copyright (c) 2011 Ryan Biesemeyer <mailto:ruby-dev@yaauie.com> (Original typed-array work)
+- Copyright (c) 2013 Kevin Cox <mailto:kevincox@kevincox.ca>
+- See LICENSE for details.
 
 == Examples
 
