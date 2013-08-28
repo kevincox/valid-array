@@ -7,9 +7,3 @@ rdoc
 # yard generated
 doc
 .yardoc
-
-# bundler
-Gemfile.lock
-
-# jeweler generated
-pkg
