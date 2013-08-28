@@ -1,41 +1,51 @@
-= valid-array
+= valid_array
 
-Gem provides enforced-properties to arrays.
+The valid_array gem provides to create an Array that enforces certian
+properties.  Each element added to the array is passed to a validator function
+written by you.  This function can raise errors, drop items or change them.
 
-Copyright (c) 2011 Ryan Biesemeyer
-Copyright (c) 2013 Kevin Cox
-See LICENSE.txt for details
+vaild_array also provides compatibility with the typed-array gem.  There is both
+'valid_array/typed_array' which imports to `ValidArray::TypedArray` and a fully
+compatible 'valid-array' which passes 'valid-array's own test suite.
 
-Ryan Biesemeyer mailto:ruby-dev@yaauie.com
-Ryan Biesemeyer mailto:kevincox@kevincox.ca
+Copyright (c) 2011 Ryan Biesemeyer <mailto:ruby-dev@yaauie.com> (Original typed-array work)
+Copyright (c) 2013 Kevin Cox <mailto:kevincox@kevincox.ca>
+See LICENSE for details.
 
-== Example
+== Examples
 
 === ValidArray
 
 Valid Array provides a hook to change and validate every element added to the
 array.
 
- require 'valid-array'
+ require 'valid_array'
+ 
+ # An Array that converts all added elements into strings.
  class StringArray < Array
   extend ValidArray
   
   def self.validate(element)
-    element.to_s # Make everything a String.
+    element.to_s
   end
  end
  
+ # An array that enforces Numeric types and silently drops odd numbers.
  class EvenArray < Array
    extend ValidArray
+   
+   class NotEvenException < Exception
+   end
   
    def self.validate(element)
       if not element.is_a? Numeric
-         raise UnexpectedTypeException([Numeric], element.class)
+         raise TypeError, "Got #{element.class}, expected Numeric!"
       end
       
       if element % 2 == 1
-         # Assuming this exception is defined somewhere.
-         raise NotEvenException(element)
+         # This exception is handled by ValidArray, it causes the element to be
+         # dropped.  All other exceptions are propagated to the caller.
+         raise ValidArray::DontInsertException
       end
    end
  end
@@ -43,6 +53,8 @@ array.
 === TypedArray
 
 TypedArray is fully compatible with https://github.com/yaauie/typed-array/.
+For compatibility mode require 'typed-array', otherwise require
+'valid_array/typed_array' and access it from `ValidArray::TypedArray`.
 
 === Create Standard Class
 
@@ -52,26 +64,28 @@ TypedArray is fully compatible with https://github.com/yaauie/typed-array/.
    restrict_types Thing1,Thing2
  end
  
+ # or new style
+ 
+ require 'valid_array/typed_array'
+ class Things < Array
+   extend ValidArray::TypedArray
+   restrict_types Thing1,Thing2
+ end
+ 
 === Generate Class using Factory
  
  require 'typed-array'
  things = TypedArray(Thing1,Thing2)
-
-=== Adding items to the Array
+ a = things.new
  
- # All standard Array interfaces are implemented, including block-processing
- # and variable-number of arguments. For methods that would usually return an
- # Array, they instead return an instance of the current class (except to_a).
- #
- # The difference is that if the method would generate an Array including the
- # wrong types, ValidArray::UnexpectedTypeException is raised and the call is
- # aborted before modifying the enforced ValidArray instance.
+ # or new style
  
- require 'typed-array'
- symbols = TypedArray(Symbol).new([:foo,:bar,:baz,:bingo])
- begin
-   integers = TypedArray(Integer).new([1,3,7,2,:symbol])
- rescue TypedArray::UnexpectedTypeException
-   puts "An error occured: #{$!}"
- end
-
+ require 'valid_array/typed_array'
+ things = ValidArray::TypedArray(Thing1, Thing2)
+ a = things.new
+ 
+= Adding items to the Array
+ 
+All standard Array interfaces are implemented, including block-processing
+and variable-number of arguments. For methods that would usually return an
+Array, they instead return an instance of the current class (except to_a).

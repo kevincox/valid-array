@@ -20,4 +20,26 @@ describe ValidArray do
       end
     end
   end
+   
+  context 'when custom validator is used' do
+    before :each do
+      class MyArray < Array
+        extend ValidArray
+        
+        def self.validate(e)
+          if e%2 == 0
+            e
+          else
+            raise ValidArray::DontInsertException
+          end
+        end
+      end
+      
+      @typed_ary = MyArray.new(10) {|i| i}
+    end
+    
+    it 'should drop when DontInsertException is raised' do
+      @typed_ary.should eql([0,2,4,6,8])
+    end
+  end
 end

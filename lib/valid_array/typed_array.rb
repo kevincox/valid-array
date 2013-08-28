@@ -43,7 +43,6 @@ module ValidArray::TypedArray
     end
   end
 
-  # Default validator.  Override this.
   def validate(item)
     if item.nil? or restricted_types.any? { |allowed| item.class <= allowed }
       return item

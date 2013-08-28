@@ -13,7 +13,7 @@ module ValidArray
 
     # Validates outcome. See Array#replace
     def replace(other_ary)
-      _ensure_array_is_valid other_ary
+      other_ary = _ensure_array_is_valid other_ary
       super
     end
 
@@ -34,8 +34,10 @@ module ValidArray
 
     # Validates outcome. See Array#<<
     def <<(item)
-      item = self.class.validate item
-      super
+      begin
+        item = self.class.validate item
+        super
+      rescue DontInsertException; end
     end
 
     # Validates outcome. See Array#[]
@@ -50,8 +52,10 @@ module ValidArray
 
     # Validates outcome. See Array#[]=
     def []=(idx, item)
-      item = self.class.validate item
-      super
+      begin
+        item = self.class.validate item
+        super
+      rescue DontInsertException; end
     end
 
     # Validates outcome. See Array#concat
@@ -75,15 +79,13 @@ module ValidArray
 
     # Validates outcome. See Array#push
     def push(*items)
-      items = items.dup
-      _ensure_array_is_valid items
+      items = _ensure_array_is_valid items
       super
     end
 
     # Validates outcome. See Array#unshift
     def unshift(*items)
-      items = items.dup
-      _ensure_array_is_valid items
+      items = _ensure_array_is_valid items
       super
     end
 
@@ -96,9 +98,14 @@ module ValidArray
 
     # Ensure that all items in the passed Array are allowed
     def _ensure_array_is_valid(ary)
-      ary.map! do |e|
-        self.class.validate(e)
+      toins = []
+      ary.each do |e|
+        begin
+          toins << self.class.validate(e)
+        rescue DontInsertException; end
       end
+      
+      toins
     end
   end
 end

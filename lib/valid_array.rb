@@ -12,8 +12,22 @@ module ValidArray
       include functions_module
     end
   end
+  
+  # Exception to raise to silently skip insertion.
+  #
+  # Raising this from validate will prevent the item from being inserted.  Use
+  # with caution as it may break assumptions that coders are making about how
+  # your array works.
+  class DontInsertException < Exception; end
 
   # Default validator.  Override this.
+  #
+  # Translates the provided item to insert to the new item.  Raise an exception
+  # to prevent insertion.  DontInsertException will be handled and ignored,
+  # other exceptions will be propergated.
+  #
+  # @param element [Object] The element being added to the array.
+  # @return [Object] The element to actualy insert into the array.
   def validate(element)
     raise NotImplementedError, "You must implement validate."
   end
