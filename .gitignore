@@ -7,3 +7,6 @@ rdoc
 # yard generated
 doc
 .yardoc
+
+# gem generated
+*.gem

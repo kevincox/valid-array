@@ -9,15 +9,18 @@ Gem::Specification.new do |s|
 	s.specification_version = 1
 	s.date = '2013-08-28'
 	
-	s.homepage = 'http://github.com/kevincox/valid-array'
+	s.homepage = 'http://github.com/kevincox/valid_array'
 	s.authors = ['Kevin Cox', 'Ryan Biesemeyer']
 	s.email = 'kevincox@kevincox.ca'
-	s.summary = 'Provides methods for creating type-enforced Arrays'
+	s.summary = 'Provides methods for controlling the elements added to an array.'
 	s.description = <<-'EOS'
-		All methods that alter the contents of an array that implements this
-		Gem are first checked to ensure that the added items are of the types
-		allowed. All methods behave exactly as their Array counterparts,
-		including additional forms, block processing, etc.
+The valid_array gem provides to create an Array that enforces certian
+properties.  Each element added to the array is passed to a validator function
+written by you.  This function can raise errors, drop items or change them.
+
+vaild_array also provides compatibility with the typed-array gem.  There is both
+'valid_array/typed_array' which imports to `ValidArray::TypedArray` and a fully
+compatible 'valid-array' which passes 'valid-array's own test suite.
 	EOS
 	s.licenses = ['MIT']
 	
