@@ -28,7 +28,7 @@ Rake::RDocTask.new do |rdoc|
 	version = File.read('VERSION').chomp
 
 	rdoc.rdoc_dir = 'rdoc'
-	rdoc.title = "valid-array #{version}"
+	rdoc.title = "valid_array #{version}"
 	rdoc.rdoc_files.include('README*')
 	rdoc.rdoc_files.include('lib/**/*.rb')
 end

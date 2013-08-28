@@ -4,7 +4,7 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-	s.name = 'valid-array'
+	s.name = 'valid_array'
 	s.version = File.read('VERSION').chomp
 	s.specification_version = 1
 	s.date = '2013-08-28'

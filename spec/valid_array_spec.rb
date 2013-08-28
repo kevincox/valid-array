@@ -1,4 +1,5 @@
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require_relative 'spec_helper'
+require 'valid_array'
 
 describe ValidArray do
   context 'when custom validator is used' do

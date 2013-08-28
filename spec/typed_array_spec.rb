@@ -1,5 +1,5 @@
 require_relative 'spec_helper'
-require 'typed-array'
+require 'valid_array/typed_array'
 
 # We need to test in several different contexts, so provide the base info here.
 inputs = {
@@ -29,11 +29,11 @@ inputs = {
   }
 }
 
-describe TypedArray do
+describe ValidArray::TypedArray do
   describe '#new' do
     inputs.each_pair do |accepted_types, config|
       context "when only accepting <#{accepted_types.inspect}>" do
-        subject { TypedArray( *accepted_types ) }
+        subject { ValidArray::TypedArray( *accepted_types ) }
 
         context 'Form 1: typed_ary.new()' do
           it "should have zero-length" do
@@ -65,7 +65,7 @@ describe TypedArray do
           end
 
           it "should raise when obj is the wrong type" do
-            expect{ subject.new( 3, config[:fail][:all].first ) }.to raise_error TypedArray::UnexpectedTypeException
+            expect{ subject.new( 3, config[:fail][:all].first ) }.to raise_error ValidArray::TypedArray::UnexpectedTypeException
           end
         end
 
@@ -75,11 +75,11 @@ describe TypedArray do
           end
 
           it "should raise when one object is the wrong type" do
-            expect{ subject.new(config[:fail][:one])}.to raise_error TypedArray::UnexpectedTypeException
+            expect{ subject.new(config[:fail][:one])}.to raise_error ValidArray::TypedArray::UnexpectedTypeException
           end
 
           it "should raise when more than one object is the wrong type" do
-            expect{ subject.new(config[:fail][:all])}.to raise_error TypedArray::UnexpectedTypeException
+            expect{ subject.new(config[:fail][:all])}.to raise_error ValidArray::TypedArray::UnexpectedTypeException
           end
         end
 
@@ -89,11 +89,11 @@ describe TypedArray do
           end
 
           it "should raise when block returns wrong type once" do
-            expect{ subject.new(config[:fail][:one].length){|i| config[:fail][:one][i]} }.to raise_error TypedArray::UnexpectedTypeException
+            expect{ subject.new(config[:fail][:one].length){|i| config[:fail][:one][i]} }.to raise_error ValidArray::TypedArray::UnexpectedTypeException
           end
 
           it "should raise when block returns wrong type more than once" do
-            expect{ subject.new(config[:fail][:all].length){|i| config[:fail][:all][i]} }.to raise_error TypedArray::UnexpectedTypeException
+            expect{ subject.new(config[:fail][:all].length){|i| config[:fail][:all][i]} }.to raise_error ValidArray::TypedArray::UnexpectedTypeException
           end
         end
       end
@@ -105,7 +105,7 @@ describe TypedArray do
       inputs.each_pair do |accepted_types,config|
         context "when only accepting <#{accepted_types.inspect}>" do
           before :each do
-            @typed_ary = TypedArray( *accepted_types).new(config[:base])
+            @typed_ary = ValidArray::TypedArray( *accepted_types).new(config[:base])
             @ary = config[:base].to_a
           end
 
@@ -131,14 +131,14 @@ describe TypedArray do
             end
 
             it "should raise an exception" do
-              expect{ @typed_ary.send(method,@item) }.to raise_error TypedArray::UnexpectedTypeException
+              expect{ @typed_ary.send(method,@item) }.to raise_error ValidArray::TypedArray::UnexpectedTypeException
             end
 
             it "should not modify typed_ary" do
               begin
                 backup = @typed_ary.to_a
                 @typed_ary.send(method,@item)
-              rescue TypedArray::UnexpectedTypeException
+              rescue ValidArray::TypedArray::UnexpectedTypeException
               ensure
                 @typed_ary.to_a.should == backup
               end
@@ -154,7 +154,7 @@ describe TypedArray do
       inputs.each_pair do |accepted_types,config|
         context "when only accepting <#{accepted_types.inspect}>" do
           before :each do
-            @typed_ary = TypedArray( *accepted_types).new(config[:base])
+            @typed_ary = ValidArray::TypedArray( *accepted_types).new(config[:base])
             @ary = config[:base].to_a
           end
 
@@ -181,14 +181,14 @@ describe TypedArray do
 
             it "should raise an exception" do
 
-              expect{ @typed_ary.send(method,4,@item) }.to raise_error TypedArray::UnexpectedTypeException
+              expect{ @typed_ary.send(method,4,@item) }.to raise_error ValidArray::TypedArray::UnexpectedTypeException
             end
 
             it "should not modify typed_ary" do
               begin
                 backup = @typed_ary.to_a
                 @typed_ary.send(method,4,@item)
-              rescue TypedArray::UnexpectedTypeException
+              rescue ValidArray::TypedArray::UnexpectedTypeException
               ensure
                 @typed_ary.to_a.should == backup
               end
@@ -204,7 +204,7 @@ describe TypedArray do
       inputs.each_pair do |accepted_types,config|
         context "when only accepting <#{accepted_types.inspect}>" do
           before :each do
-            @typed_ary = TypedArray( *accepted_types).new(config[:base])
+            @typed_ary = ValidArray::TypedArray( *accepted_types).new(config[:base])
             @ary = config[:base].to_a
           end
 
@@ -231,7 +231,7 @@ describe TypedArray do
               end
               unless method == :& # `and` opperator cannot produce elements that are not in both arrays already; since one is assuredly filtered, we can skip this.
                 it "should raise an exception" do
-                  expect{ @typed_ary.send(method,@other_ary) }.to raise_error TypedArray::UnexpectedTypeException
+                  expect{ @typed_ary.send(method,@other_ary) }.to raise_error ValidArray::TypedArray::UnexpectedTypeException
                 end
               end
 
@@ -239,7 +239,7 @@ describe TypedArray do
                 begin
                   backup = @typed_ary.to_a
                   @typed_ary.send(method,@other_ary)
-                rescue TypedArray::UnexpectedTypeException
+                rescue ValidArray::TypedArray::UnexpectedTypeException
                 ensure
                   @typed_ary.to_a.should == backup
                 end
@@ -253,7 +253,7 @@ describe TypedArray do
 
   context 'when extending classes' do
     before :each do
-      @base = TypedArray(Symbol)
+      @base = ValidArray::TypedArray(Symbol)
       @extension = Class.new( @base )
     end
 
