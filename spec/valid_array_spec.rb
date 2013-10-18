@@ -1,6 +1,13 @@
 require_relative 'spec_helper'
 require 'valid_array'
 
+class StringArray < Array
+  extend ValidArray
+  def self.validate(e)
+    e.to_s
+  end
+end
+
 describe ValidArray do
   context 'when custom validator is used' do
     before :each do
@@ -20,7 +27,19 @@ describe ValidArray do
       end
     end
   end
-   
+  
+  context 'when array is modified' do
+    it 'should convert contat arguments' do
+      a = StringArray.new
+      
+      a.concat [1,2,3]
+      a.should eql(['1','2','3'])
+      
+      a.concat [4,5,6]
+      a.should eql(['1','2','3','4','5','6'])
+    end
+  end
+
   context 'when custom validator is used' do
     before :each do
       class MyArray < Array

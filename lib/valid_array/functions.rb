@@ -60,7 +60,7 @@ module ValidArray
 
     # Validates outcome. See Array#concat
     def concat(other_ary)
-      _ensure_array_is_valid other_ary
+      other_ary = _ensure_array_is_valid other_ary
       super
     end
 
