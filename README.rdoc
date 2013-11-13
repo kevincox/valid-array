@@ -1,6 +1,10 @@
 = valid_array
 
-The valid_array gem provides to create an Array that enforces certian
+
+{<img src="https://travis-ci.org/kevincox/valid_array.png" alt="Build Status"/>}[https://travis-ci.org/kevincox/valid_array]
+
+
+The valid_array gem provides to create an Array that enforces certain
 properties.  Each element added to the array is passed to a validator function
 written by you.  This function can raise errors, drop items or change them.
 
@@ -34,9 +38,6 @@ array.
  class EvenArray < Array
    extend ValidArray
    
-   class NotEvenException < Exception
-   end
-  
    def self.validate(element)
       if not element.is_a? Numeric
          raise TypeError, "Got #{element.class}, expected Numeric!"
@@ -53,11 +54,12 @@ array.
 === TypedArray
 
 TypedArray is fully compatible with https://github.com/yaauie/typed-array/.
-For compatibility mode require 'typed-array', otherwise require
+For compatibility you can require 'typed-array', otherwise require
 'valid_array/typed_array' and access it from `ValidArray::TypedArray`.
 
 === Create Standard Class
 
+ # Compatibility style.
  require 'typed-array'
  class Things < Array
    extend TypedArray
@@ -74,6 +76,7 @@ For compatibility mode require 'typed-array', otherwise require
  
 === Generate Class using Factory
  
+ # Compatibility style.
  require 'typed-array'
  things = TypedArray(Thing1,Thing2)
  a = things.new
